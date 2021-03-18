@@ -2,7 +2,7 @@
 C++ Linux command-line application, interfacing with profit365.eu
 
 Dependecies:
-[nlohmann/json](https://github.com/nlohmann/json)
+[nlohmann/json](https://github.com/nlohmann/json) <br>
 [libcurl](https://curl.se/libcurl/)
 
 #### Currently supporting:

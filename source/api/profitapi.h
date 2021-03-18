@@ -1,17 +1,14 @@
 #ifndef PROFITAPI_PROFITAPI_H
 #define PROFITAPI_PROFITAPI_H
 
-#define IPV4_REGEX "^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
-#include <string>
-#include <utility>
-#include <vector>
 #include <nlohmann/json.hpp>
+#include <curl/curl.h>
+#include <string>
+#include <vector>
 #include <regex>
-#include "curl/curl.h"
+
 
 namespace profitapi {
-
-    const static auto ipv4_regex = std::regex(IPV4_REGEX);
 
     enum request_type{
         POST, GET, PUT
@@ -23,14 +20,6 @@ namespace profitapi {
 
     struct headers {
         std::vector<std::string> header_vector;
-        [[nodiscard]] std::string headerString() const {
-            std::string output;
-            for(const std::string& header : header_vector)
-                output += header + "\n";
-            output += "\n";
-
-            return output;
-        }
 
         void put(const std::string& header){
             header_vector.emplace_back(header);

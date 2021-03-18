@@ -1,4 +1,10 @@
+#define IPV4_REGEX "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$"
+
 #include <cstdio>
+#include <regex>
+#include <string>
+#include <vector>
+
 #include "api/profitapi.h"
 
 void read_input(std::string* output, const char* msg) {
@@ -32,7 +38,7 @@ bool ieq(std::string str0, std::string str1) {
 int main(int argc, char** argv) {
     if(argc < 2) {
         printf("Usage: profitapi <action> <parameters>\n");
-        printf("Available actions:\n - gak - Generates api key\n\tparameters: none\n\n");
+        printf("Available actions:\n - gak - Generates api key\n\t parameters: none\n\n");
         return 0;
     }
 
@@ -48,6 +54,7 @@ int main(int argc, char** argv) {
 
         char buffer[255] = {0};
         std::string str;
+        auto regex = std::regex(IPV4_REGEX);
 
         printf("\n");
         printf("Allowed IPs, type \"done\" when finished:\n");
@@ -57,7 +64,7 @@ int main(int argc, char** argv) {
             if(ieq(str, std::string("done")))
                 break;
 
-            if(!std::regex_match(str, std::regex(IPV4_REGEX))){
+            if(!std::regex_match(str, regex)){
                 printf("That is not a valid ipv4 adress\n");
                 continue;
             }
@@ -72,7 +79,7 @@ int main(int argc, char** argv) {
             if(ieq(str, std::string("done")))
                 break;
 
-            if(!std::regex_match(str, std::regex(IPV4_REGEX))){
+            if(!std::regex_match(str, regex)) {
                 printf("That not a valid ipv4 adress\n");
                 continue;
             }

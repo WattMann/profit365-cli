@@ -1,4 +1,4 @@
-# profitapi-cli
+# profit365-cli
 C++ Linux command-line application, interfacing with profit365.eu
 
 Dependencies:<br>

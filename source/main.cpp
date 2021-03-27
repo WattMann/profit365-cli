@@ -4,8 +4,7 @@
 #include <regex>
 #include <string>
 #include <vector>
-
-#include "api/profitapi.h"
+#include <profitapi/profitapi.hpp>
 
 void read_input(std::string* output, const char* msg) {
     char buffer[255] = {0};
@@ -87,25 +86,29 @@ int main(int argc, char** argv) {
             memset(&buffer, 0, 255);
         }
 
-        auto req = profitapi::generate_key(username, allowed, denied);
-        auto header = profitapi::authorization_header(
-                client_id,
-                client_secret,
-                key,
-                profitapi::login_type::BASIC,
-                company_id);
+        profitapi::Credentials credentials {
+            .key = key,
+            .clientID = client_id,
+            .clientSecret = client_secret,
+            .companyID = company_id
+        };
 
-        auto comms = profitapi::communicator(header);
-        auto response = comms.execute(req);
+        profitapi::KeyData data {
+            .userName = username,
+            .ipWhitelist = allowed,
+            .ipBlacklist = denied
+        };
 
-        if(response) {
+        auto response = profitapi::generateKey(credentials, data);
+
+        if(response.state != profitapi::State::OK) {
             try {
                 printf("\n##### Generated a new key #####\n\n ID: %s\n Key: %s\n\n###############################\n",
-                       response->as_json()["id"].get<std::string>().c_str(),
-                       response->as_json()["key"].get<std::string>().c_str()
+                       response.ID.c_str(),
+                       response.key.c_str()
                        );
             } catch (...) {
-                printf("An error occurred while generating your key: %s\n", response->content.c_str());
+                printf("An error occurred while generating your key: %s\n", response.stateDesc.c_str());
             }
         } else {
             printf("An error occurred while generating your key\n");

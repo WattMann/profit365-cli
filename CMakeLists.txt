@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.19)
-project(profitapi)
+project(profitapi-cli)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(profitapi source/main.cpp source/api/profitapi.h)
+add_executable(profitapi-cli source/main.cpp)
 
-target_link_libraries(profitapi ssl)
-target_link_libraries(profitapi crypto)
-target_link_libraries(profitapi curl)
+target_link_libraries(profitapi-cli profitapi)
+target_link_libraries(profitapi-cli curl)
+target_link_libraries(profitapi-cli ssl)
+target_link_libraries(profitapi-cli crypto)
+target_link_libraries(profitapi-cli fmt)

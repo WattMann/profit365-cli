@@ -3,7 +3,7 @@ project(profit365-cli)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(profitapi-cli source/main.cpp)
+add_executable(profit365-cli source/main.cpp)
 
 target_link_libraries(profit365-cli profitapi)
 target_link_libraries(profit365-cli curl)

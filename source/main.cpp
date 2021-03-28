@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
 
         auto response = profitapi::generateKey(credentials, data);
 
-        if(response.state != profitapi::State::OK) {
+        if(response.state == profitapi::State::OK) {
             try {
                 printf("\n##### Generated a new key #####\n\n ID: %s\n Key: %s\n\n###############################\n",
                        response.ID.c_str(),
@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
                 printf("An error occurred while generating your key: %s\n", response.stateDesc.c_str());
             }
         } else {
-            printf("An error occurred while generating your key\n");
+            printf("An error occurred while generating your key: %s\n", response.stateDesc.c_str());
         }
 
         return 0;
